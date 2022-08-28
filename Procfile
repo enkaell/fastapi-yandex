@@ -1,1 +1,1 @@
-web: gunicorn -w 4 -k uvicorn.workers.Uvicornworker api:app
+web: sh -c 'uvicorn api:app'
