@@ -1,0 +1,1 @@
+web: sh -c 'uvicorn api:app'
