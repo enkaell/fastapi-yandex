@@ -7,6 +7,14 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 import uvicorn
 import datetime
+from dataclasses import dataclass
+
+
+@dataclass
+class Date:
+    date: str
+    info: str
+
 
 path = 'yandex.xlsx'
 app = FastAPI()
@@ -49,16 +57,21 @@ def update_yandex_table():
         print(response.json()['sid'], " обновлен")
 
     wb.save('yandex.xlsx')
-    return datetime.datetime.now()
+    Date.date = str(datetime.datetime.now())
+    Date.info = "Ended"
 
 
-date = update_yandex_table()
-print(date)
+@app.get("/start", response_class=FileResponse)
+async def start():
+    update_yandex_table()
+    Date.date = str(datetime.datetime.now())
+    Date.info = "Started"
+    return f"Started at {datetime.datetime.now()}"
 
 
-@app.get("/time", response_class=FileResponse)
-async def main():
-    return date
+@app.get("/info")
+async def get_info():
+    return f"{Date.info} at {Date.date}"
 
 
 if __name__ == '__main__':

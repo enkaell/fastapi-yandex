@@ -7,4 +7,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["python","-m", "gunicorn", "api:app", "-k", "uvicorn.workers.UvicornWorker"]
+CMD ["python", "main.py"]
