@@ -16,7 +16,7 @@ class Date:
     info: str
 
 
-path = 'yandex.xlsx'
+path = 'yandex.xls'
 app = FastAPI()
 Token = 123
 
