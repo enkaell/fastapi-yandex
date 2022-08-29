@@ -16,7 +16,7 @@ class Date:
     info: str
 
 
-path = 'yandex.xls'
+path = 'yandex.xlsx'
 app = FastAPI()
 Token = 123
 
@@ -30,7 +30,7 @@ def update_yandex_table():
     json_data = {"password": "RAMTRX1500", "regulation": True, "email": "Rakhmanov-2019@list.ru"}
     response = requests.post('https://www.sima-land.ru/api/v5/signin', json=json_data)
     token = response.json().get('token')
-    wb = load_workbook('yandex.xls')
+    wb = load_workbook('yandex.xlsx')
     sheet = wb['Остатки']
     session = requests.Session()
     retry = Retry(connect=3, backoff_factor=0.5)
@@ -56,7 +56,7 @@ def update_yandex_table():
         sheet['E'][i.column].value = response.json()['balance']
         print(response.json()['sid'], " обновлен")
 
-    wb.save('yandex.xls')
+    wb.save('yandex.xlsx')
     Date.date = str(datetime.datetime.now())
     Date.info = "Ended"
 
@@ -73,3 +73,6 @@ async def start():
 async def get_info():
     return f"{Date.info} at {Date.date}"
 
+
+# if __name__ == '__main__':
+#     uvicorn.run(app, host='127.0.0.1', port=8080)
