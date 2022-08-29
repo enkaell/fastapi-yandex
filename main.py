@@ -30,7 +30,7 @@ def update_yandex_table():
     json_data = {"password": "RAMTRX1500", "regulation": True, "email": "Rakhmanov-2019@list.ru"}
     response = requests.post('https://www.sima-land.ru/api/v5/signin', json=json_data)
     token = response.json().get('token')
-    wb = load_workbook('yandex.xlsx')
+    wb = load_workbook('yandex.xls')
     sheet = wb['Остатки']
     session = requests.Session()
     retry = Retry(connect=3, backoff_factor=0.5)
@@ -56,7 +56,7 @@ def update_yandex_table():
         sheet['E'][i.column].value = response.json()['balance']
         print(response.json()['sid'], " обновлен")
 
-    wb.save('yandex.xlsx')
+    wb.save('yandex.xls')
     Date.date = str(datetime.datetime.now())
     Date.info = "Ended"
 
