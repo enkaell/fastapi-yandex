@@ -16,7 +16,7 @@ class Date:
     info: str
 
 
-path = 'yandex.xlsx'
+path = 'yandex.xml'
 app = FastAPI()
 Token = 123
 
@@ -73,7 +73,6 @@ async def start():
 async def get_info():
     return f"{Date.info} at {Date.date}"
 
-update_yandex_table()
 
 if __name__ == '__main__':
     uvicorn.run(app, host='127.0.0.1', port=8080)
