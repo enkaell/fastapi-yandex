@@ -16,7 +16,7 @@ class Date:
     info: str
 
 
-path = 'yandex.xml'
+path = 'ezyzip.zip'
 app = FastAPI()
 Token = 123
 
