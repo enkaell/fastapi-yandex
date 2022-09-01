@@ -16,7 +16,7 @@ def update_yandex_table():
     tree = ET.parse('yandex.xml')
     root_node = tree.getroot()
     session = requests.Session()
-    retry = Retry(connect=3, backoff_factor=0.5)
+    retry = Retry(connect=2, backoff_factor=0.5)
     adapter = HTTPAdapter(max_retries=retry)
     session.mount('https://', adapter)
     for tag in root_node.findall('shop/offers/offer'):

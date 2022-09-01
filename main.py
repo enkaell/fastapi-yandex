@@ -33,7 +33,7 @@ def update_yandex_table():
     wb = load_workbook('yandex.xlsx')
     sheet = wb['Остатки']
     session = requests.Session()
-    retry = Retry(connect=3, backoff_factor=0.5)
+    retry = Retry(connect=2, backoff_factor=0.5)
     adapter = HTTPAdapter(max_retries=retry)
     session.mount('https://', adapter)
 
