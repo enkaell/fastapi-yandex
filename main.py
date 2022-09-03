@@ -58,7 +58,7 @@ def update_yandex_table():
         except Exception as e:
             tree.write('ostatki.xml', encoding='utf-8')
             zf = zipfile.ZipFile("ostatki.zip", "w", compresslevel=8, compression=zipfile.ZIP_DEFLATED)
-            zf.write('t.xml', compresslevel=8)
+            zf.write('ostatki.xml', compresslevel=8)
         if int(tag.find('count').text) < 10:
             tag.find('count').text = '0'
         else:
@@ -66,7 +66,7 @@ def update_yandex_table():
         print(response.json()['sid'], " обновлен")
     tree.write('ostatki.xml', encoding='utf-8')
     zf = zipfile.ZipFile("ostatki.zip", "w", compresslevel=8, compression=zipfile.ZIP_DEFLATED)
-    zf.write('t.xml', compresslevel=8)
+    zf.write('ostatki.xml', compresslevel=8)
     Date.date = str(datetime.datetime.now())
     Date.info = "Ended"
 
