@@ -27,10 +27,12 @@ async def main():
 
 
 def update_yandex_table():
+    zip = ZipFile('ostatki.zip')
+    zip.extractall()   
     json_data = {"password": "RAMTRX1500", "regulation": True, "email": "Rakhmanov-2019@list.ru"}
     response = requests.post('https://www.sima-land.ru/api/v5/signin', json=json_data)
     token = response.json().get('token')
-    tree = ET.parse('yandex.xml')
+    tree = ET.parse('t.xml')
     root_node = tree.getroot()
     session = requests.Session()
     retry = Retry(connect=2, backoff_factor=0.5)
@@ -56,17 +58,17 @@ def update_yandex_table():
                 }
             )
         except Exception as e:
-            tree.write('ostatki.xml', encoding='utf-8')
+            tree.write('t.xml', encoding='utf-8')
             zf = zipfile.ZipFile("ostatki.zip", "w", compresslevel=8, compression=zipfile.ZIP_DEFLATED)
-            zf.write('ostatki.xml', compresslevel=8)
+            zf.write('t.xml', compresslevel=8)
         if int(tag.find('count').text) < 10:
             tag.find('count').text = '0'
         else:
             tag.find('count').text = str(response.json()['balance'])
         print(response.json()['sid'], " обновлен")
-    tree.write('ostatki.xml', encoding='utf-8')
+    tree.write('t.xml', encoding='utf-8')
     zf = zipfile.ZipFile("ostatki.zip", "w", compresslevel=8, compression=zipfile.ZIP_DEFLATED)
-    zf.write('ostatki.xml', compresslevel=8)
+    zf.write('t.xml', compresslevel=8)
     Date.date = str(datetime.datetime.now())
     Date.info = "Ended"
 
