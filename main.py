@@ -27,7 +27,7 @@ async def main():
 
 
 def update_yandex_table():
-    zip = ZipFile('ostatki.zip')
+    zip = zipfile.ZipFile('ostatki.zip')
     zip.extractall()   
     json_data = {"password": "RAMTRX1500", "regulation": True, "email": "Rakhmanov-2019@list.ru"}
     response = requests.post('https://www.sima-land.ru/api/v5/signin', json=json_data)
