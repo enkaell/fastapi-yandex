@@ -7,7 +7,8 @@ from fastapi.responses import FileResponse
 import uvicorn
 import datetime
 from dataclasses import dataclass
-import xml.etree.ElementTree as ET, fromstring
+import xml.etree.ElementTree as ET
+from xml.etree.ElementTree import fromstring
 import zlib, sys
 
 @dataclass
