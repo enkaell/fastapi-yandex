@@ -29,12 +29,11 @@ async def main():
 
 def update_yandex_table():
     zip = zipfile.ZipFile('ostatki.zip')
-    data = zip.read('t.xml')
+    tree = fromstring(zip.read('t.xml'))
     json_data = {"password": "RAMTRX1500", "regulation": True, "email": "Rakhmanov-2019@list.ru"}
     response = requests.post('https://www.sima-land.ru/api/v5/signin', json=json_data)
     token = response.json().get('token')
     import os
-    tree = fromstring(data)
     root_node = tree.getroot()
     session = requests.Session()
     retry = Retry(connect=2, backoff_factor=0.5)
