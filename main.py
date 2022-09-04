@@ -7,7 +7,7 @@ from fastapi.responses import FileResponse
 import uvicorn
 import datetime
 from dataclasses import dataclass
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as ET, fromstring
 import zlib, sys
 
 @dataclass
@@ -33,7 +33,7 @@ def update_yandex_table():
     response = requests.post('https://www.sima-land.ru/api/v5/signin', json=json_data)
     token = response.json().get('token')
     import os
-    tree = ET.parse(os.path.join('ostatki.zip', 't.xml'))
+    tree = fromstring(data)
     root_node = tree.getroot()
     session = requests.Session()
     retry = Retry(connect=2, backoff_factor=0.5)
