@@ -45,6 +45,7 @@ def update_yandex_table():
                 'by_sid': 'false',
             }
         )
+        print(f"{response.json()['sid']} обновлен")
         if int(tag.find('count').text) < 10:
             tag.find('count').text = '0'
         else:
