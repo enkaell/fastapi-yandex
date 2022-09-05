@@ -31,8 +31,12 @@ def update_yandex_table():
     json_data = {"password": "RAMTRX1500", "regulation": True, "email": "Rakhmanov-2019@list.ru"}
     response = requests.post('https://www.sima-land.ru/api/v5/signin', json=json_data)
     token = response.json().get('token')
-    tree = ET.fromstring(open('t.xml').read())
-    root_node = tree.getroot()
+    print('t.xml')
+    try:
+        tree = ET.parse('t.xml')
+        root_node = tree.getroot()
+    except Exception:
+        pass
     session = requests.Session()
     retry = Retry(connect=2, backoff_factor=0.5)
     adapter = HTTPAdapter(max_retries=retry)
