@@ -65,7 +65,6 @@ def update_yandex_table():
             tag.find('count').text = '0'
         else:
             tag.find('count').text = str(response.json()['balance'])
-        print(response.json()['sid'], " обновлен")
     tree.write('t.xml', encoding='utf-8')
     zf = zipfile.ZipFile("ostatki.zip", "w", compresslevel=8, compression=zipfile.ZIP_DEFLATED)
     zf.write('t.xml', compresslevel=8)
