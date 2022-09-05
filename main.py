@@ -33,10 +33,9 @@ def update_yandex_table():
     print('t.xml')
     try:
         tree = ET.parse('t.xml')
-        print(ET.tostring(tree, pretty_print=True))
-        root_node = tree.getroot()
     except Exception:
         pass
+    root_node = tree.getroot()
     session = requests.Session()
     retry = Retry(connect=2, backoff_factor=0.5)
     adapter = HTTPAdapter(max_retries=retry)
