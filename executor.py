@@ -1,10 +1,11 @@
-import datetime
-
-from openpyxl import load_workbook
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+import zipfile
+import datetime
+from dataclasses import dataclass
 import xml.etree.ElementTree as ET
+
 
 path = 'yandex.xlsx'
 
@@ -13,13 +14,19 @@ def update_yandex_table():
     json_data = {"password": "RAMTRX1500", "regulation": True, "email": "Rakhmanov-2019@list.ru"}
     response = requests.post('https://www.sima-land.ru/api/v5/signin', json=json_data)
     token = response.json().get('token')
-    tree = ET.parse('yandex.xml')
+    zip = zipfile.ZipFile('ostatki.zip')
+    zip.extractall()
+    tree = ET.parse('t.xml')
     root_node = tree.getroot()
     session = requests.Session()
     retry = Retry(connect=2, backoff_factor=0.5)
     adapter = HTTPAdapter(max_retries=retry)
     session.mount('https://', adapter)
     for tag in root_node.findall('shop/offers/offer'):
+        try:
+            tag.remove(tag[1])
+        except Exception:
+            pass
         try:
             response = session.get(
                 f"https://www.sima-land.ru/api/v5/item/{tag.attrib['id']}",
@@ -35,12 +42,16 @@ def update_yandex_table():
                 }
             )
         except Exception as e:
-            tree.write('ostatki.xml', encoding='utf-8')
-        tag.find('count').text = str(response.json()['balance'])
-        print(response.json()['sid'], " обновлен")
-    tree.write('ostatki.xml', encoding='utf-8')
-
+            tree.write('t.xml', encoding='utf-8')
+            zf = zipfile.ZipFile("ostatki.zip", "w", compresslevel=8, compression=zipfile.ZIP_DEFLATED)
+            zf.write('t.xml', compresslevel=8)
+        if int(tag.find('count').text) < 10:
+            tag.find('count').text = '0'
+        else:
+            tag.find('count').text = str(response.json()['balance'])
+    tree.write('t.xml', encoding='utf-8')
+    zf = zipfile.ZipFile("ostatki.zip", "w", compresslevel=8, compression=zipfile.ZIP_DEFLATED)
+    zf.write('t.xml', compresslevel=8)
 
 update_yandex_table()
-
 print("Ended in ", datetime.datetime.now())
