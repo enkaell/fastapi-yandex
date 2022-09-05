@@ -1,13 +1,7 @@
 FROM python:3.9
+COPY . /app
+WORKDIR /app
+RUN pip install -r requirements.txt
+EXPOSE 5001
+CMD gunicorn main:app
 
-WORKDIR /usr/src/app
-
-COPY ./requirements.txt /code/requirements.txt
-
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
-
-#
-COPY ./main.py /code/
-
-#
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
