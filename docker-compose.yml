@@ -1,9 +1,0 @@
-version: '3'
-services:
-  fastapi:
-    build: .
-    container_name: "api"
-    ports:
-      - "8000:15400"
-    volumes:
-      - ./:/app
