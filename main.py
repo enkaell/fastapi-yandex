@@ -40,10 +40,6 @@ def update_yandex_table():
     session.mount('https://', adapter)
     for tag in root_node.findall('shop/offers/offer'):
         try:
-            tag.remove(tag[1])
-        except Exception:
-            pass
-        try:
             response = session.get(
                 f"https://www.sima-land.ru/api/v5/item/{tag.attrib['id']}",
                 headers={
@@ -58,9 +54,7 @@ def update_yandex_table():
                 }
             )
         except Exception as e:
-            tree.write('t.xml', encoding='utf-8')
-            zf = zipfile.ZipFile("ostatki.zip", "w", compresslevel=8, compression=zipfile.ZIP_DEFLATED)
-            zf.write('t.xml', compresslevel=8)
+            pass
         if int(tag.find('count').text) < 10:
             tag.find('count').text = '0'
         else:
